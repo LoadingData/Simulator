@@ -1,11 +1,8 @@
 package mygame;
 
 import com.jme3.asset.AssetManager;
-import com.jme3.effect.ParticleEmitter;
-import com.jme3.effect.ParticleMesh;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -69,20 +66,7 @@ public class ZeeKraan extends Node {
                     getContainerInt++;
                     this.attachChild(container);
                     container.setLocalTranslation(-10, 13.5f, 3);
-                    ParticleEmitter debrisEffect = new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
-                    Material debrisMat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
-                    debrisMat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/Debris.png"));
-                    debrisEffect.setMaterial(debrisMat);
-                    debrisEffect.setImagesX(3);
-                    debrisEffect.setImagesY(3); // 3x3 texture animation
-                    debrisEffect.setRotateSpeed(4);
-                    debrisEffect.setSelectRandomImage(true);
-                    debrisEffect.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 4, 0));
-                    debrisEffect.setStartColor(new ColorRGBA(1f, 1f, 1f, 1f));
-                    debrisEffect.setGravity(0f, 6f, 0f);
-                    debrisEffect.getParticleInfluencer().setVelocityVariation(.60f);
-                    this.attachChild(debrisEffect);
-                    debrisEffect.emitAllParticles();
+                    
 
                 }
                 break;
