@@ -17,22 +17,17 @@ import com.jme3.scene.shape.Box;
  * @author User
  */
 public class Container extends Node{
-    static int numbercontainers;
+    int ID;
+    Vector3f locatie;
     
-    public Container(AssetManager assetManager){
+    public Container(AssetManager assetManager, int ID){
+        this.ID = ID;
         
-        numbercontainers++;
-        
-        Box box = new Box(Vector3f.ZERO, 13f / 6, 2.5f / 6, 2.5f / 6);//13 bij 2.5
+        Box box = new Box(Vector3f.ZERO, 13f / 6, 2.5f / 6, 2.5f / 6);
         Geometry container = new Geometry("A Textured Box", box);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        if(numbercontainers % 2 == 0){
-        mat.setColor("Color", ColorRGBA.Blue);}
-        else{
-            mat.setColor("Color", ColorRGBA.Red);}
-        //Texture text = assetManager.loadTexture("Textures/gras.jpg");
-        //mat.setTexture("ColorMap", text);
-
+        mat.setColor("Color", ColorRGBA.Red);
+        
         container.setMaterial(mat);
         attachChild(container);
         

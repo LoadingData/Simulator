@@ -12,18 +12,16 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
-import javax.management.timer.Timer;
 
 /**
  *
  * @author User
- */
+ */ 
 public class OpslagKraan extends Node {
 
     Spatial opslagkraan;
     static int numberflessen;
-    boolean heenwegklaar = false;
-    
+    boolean terugweg = false;
 
     public OpslagKraan(AssetManager assetManager) {
         numberflessen++;
@@ -51,52 +49,34 @@ public class OpslagKraan extends Node {
         bovenkant.setLocalTranslation(0, 8, 4);
     }
 
-    public boolean beweegheen(boolean isgeladen, float tpf, int rij, int hoogte, int kolom) {
+    public void beweegheen(boolean isgeladen, float tpf, int rij, int hoogte, int kolom) {
         // ongeladen 3 m/s geladen 2 m/s
         Vector3f hoi = this.getLocalTranslation();
 
-        System.out.println(hoi.z);
-        //System.out.println(tpf);
-        if (isgeladen == false && hoi.z > (-50 - (13 / 3 * rij)) && heenwegklaar == false) {// ongeladen
+        
+        System.out.println(tpf);
+        if (isgeladen == false && terugweg == false && hoi.z > (-50 - (13 / 3 * rij))) {// ongeladen
 
             this.move(0, 0, -tpf * 3);
-            return false;
-        } else if (hoi.z > (-50 - (13 / 3 * rij)) && heenwegklaar == false) {// geladen
+
+        } else if (hoi.z > (-50 - (13 / 3 * rij)) && terugweg == false) {// geladen
 
             this.move(0, 0, -tpf * 2);
-            return false;
 
-        } else {
-            heenwegklaar = true;
-            return true;
-            // return true als hij aangekomen is
-        }
-    }
+        } else if (hoi.z < -50 && terugweg == true) {//hij is op de terugweg
 
-    public void beweegterug(boolean isgeladen, float tpf) {
-        Vector3f hoi = this.getLocalTranslation();
-        if (hoi.z < -50 && isgeladen == false) {//hij is op de terugweg
             this.move(0, 0, tpf * 3);
-        } else if (hoi.z < -50 && isgeladen == true){
-            this.move(0, 0, tpf * 2);
-        } else {
-            heenwegklaar = false;
+        } else if (terugweg == false) {// hier neerzetten wanneer hij terug moet
+            terugweg = true;
+        } else { // hier moet code komen die beslist wanneer hij klaar is met zijn task.
+            terugweg = false;
         }
-
         
-
     }
     
-    public void zetcontainerneer(Container container){
-        ///pick up container
-        ///what place is container?
-        ///move to the place
-        ///place container
-        ///move back to startplace
-        ///end
+    public void beweegterug(boolean isgeladen, float tpf){
         
-        this.attachChild(container);
-        
-    
     }
+    
+    
 }

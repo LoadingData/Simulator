@@ -21,7 +21,7 @@ public class Main extends SimpleApplication {
     int tilex = 120; // aantal tiles in de breedte
     int tiley = 47; // aantal tiles in de lengte, deze even oneven houden voor kleuren
     OpslagKraan[] opslagkranen = new OpslagKraan[45];
-    Container[] containers = new Container[100];
+    public static Container[] containers = new Container[30];
     ZeeKraan[] zeekranen = new ZeeKraan[4];
     BinnenVaartKraan[] binnenvaartkranen = new BinnenVaartKraan[3];
     TreinKraan[] treinkranen = new TreinKraan[4];
@@ -37,7 +37,8 @@ public class Main extends SimpleApplication {
         flyCam.setMoveSpeed(100f);
         initFloor();
         makecontainer();
-
+        //Ship schip = new Ship(1000, assetManager);
+        //rootNode.attachChild(schip);
         //kranen initialiseren en plaatsen
         initBinnenVaartKraan();
         initOpslagKraan();
@@ -53,13 +54,8 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        //opslagkranen[1].move(0, 0, tpf * 5);
-        //for (int i = 0; i < 43; i++) {
-            if(opslagkranen[1].beweegheen(true, tpf, 5, 5, 5)){
-                opslagkranen[1].beweegterug(false, tpf);
-            
-            }
-        //}
+
+        zeekranen[0].getContainer(containers[0], tpf, 10, assetManager);
     }
 
     @Override
@@ -67,11 +63,12 @@ public class Main extends SimpleApplication {
     }
 
     public void makecontainer() {
+
         for (int i = 0; i < 30; i++) {
 
-            containers[i] = new Container(assetManager);
+            containers[i] = new Container(assetManager, 1);
             rootNode.attachChild(containers[i]);
-            containers[i].setLocalTranslation(100f, 2.5f / 6 + (2.5f / 3) * i, -50f);
+            containers[i].setLocalTranslation(100f + (2.5f / 3) * i, 2.5f / 6, -50f);
             containers[i].rotate(0, FastMath.PI / 2, 0);
 
             //[i].setLocalTranslation(77f + 13f / 3 + 2.5f / 3 * 12, (2.5f / 3 * 14) + ((13/3) * i), -50f);
@@ -90,9 +87,7 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(grond);
         grond.setLocalTranslation(250f, -0.020f, -100f);
     }
-    // 13 lang 2.5 breed en 2.5 hoog
 
-    //1500 500 250 3
     public void initOpslagKraan() {
 
         for (int i = 0; i < 45; i++) {
